@@ -12,7 +12,7 @@ I am still working on the project to improve the `game experience`.
 
 or based on your settingS you mgiht have to doo
 
-    pip3 install -r requirements .txt
+    pip3 install -r requirements.txt
 
 I suggest making a new environment because a new Tensorflow version has been released. Your existing environment may face some problems.
 
