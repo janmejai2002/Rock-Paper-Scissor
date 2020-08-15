@@ -13,10 +13,11 @@ moves_dict = {('R', 'P'): 'P',
 
 user_comp = ['Computer', 'Player']
 
-
-rock_path = os.path.join('..', 'imgs', 'Rock.png')
-paper_path = os.path.join('..', 'imgs', 'Paper.png')
-scissor_path = os.path.join('..', 'imgs', 'Scissor.png')
+root_dir = os.getcwd()
+rock_path = os.path.join(root_dir, 'imgs', 'Rock.png')
+paper_path = os.path.join(root_dir, 'imgs', 'Paper.png')
+scissor_path = os.path.join(root_dir, 'imgs', 'Scissor.png')
+none_path = os.path.join(root_dir, 'imgs', 'None_Image.png')
 
 
 gesture_names = {0: 'None',

@@ -23,7 +23,7 @@ def remove_background(frame, bgModel, learningRate):
     return res
 
 
-def videostream_initialize(roi, frame, isBgCaptured, bgModel, learningRate):
+def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRate):
     """Starts webcam
 
     Args:
@@ -38,9 +38,9 @@ def videostream_initialize(roi, frame, isBgCaptured, bgModel, learningRate):
     """
     frame = cv2.flip(frame, 1)
     # create vertices in form of tuples for cv2.rectangle
-    A, C = roi.create_box()
+    A, C = player_roi.create_box()
     # display initial values of ROI box
-    values = roi.display_val()
+    values = player_roi.display_val()
     # draw the rectangle on screen
     cv2.rectangle(frame, A, C, (0, 255, 0), 2)
     # draw the coordinates on screen
@@ -49,9 +49,9 @@ def videostream_initialize(roi, frame, isBgCaptured, bgModel, learningRate):
     # display the frame
     cv2.imshow('Camera', frame)
     # check if movement of ROI is out of bounds. If yes, bring it back to previous state.
-    roi.check_all()
+    player_roi.check_all()
     # slice of the ROI from frame.
-    roi_zone = roi.create_roi_zone()
+    roi_zone = player_roi.create_roi_zone()
     img_orig_roi = frame[roi_zone[0]:roi_zone[1], roi_zone[2]:roi_zone[3]]
 
     if isBgCaptured == 1:

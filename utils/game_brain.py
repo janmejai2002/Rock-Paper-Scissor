@@ -15,6 +15,7 @@ class GameBrain:
         if playerAction != 'None':
             self.__computerAction = self.__computerOptions[random.randint(
                 0, 2)]
+
             print(
                 f"Computer Action : {self.__computerAction} |||| Player Action : {playerAction}")
             print("-------------------------------------------")
@@ -31,8 +32,11 @@ class GameBrain:
             else:
                 print("Tie")
 
+            return self.__computerAction
+
         else:
             print("Waiting for you :D")
+            return 'None'
 
     def getFinalResult(self):
         player_score = self.__score_dict['Player']
@@ -48,3 +52,6 @@ class GameBrain:
 
     def getCurrentScore(self):
         return self.__score_dict
+
+    def resetScore(self):
+        self.__score_dict = {'Computer': 0, 'Player': 0}

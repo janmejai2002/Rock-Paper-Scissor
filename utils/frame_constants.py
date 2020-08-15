@@ -13,7 +13,7 @@ def get_player_roi(frame_base):
 
 
 def get_computer_roi(frame_base):
-    game_roi_x = 30
+    game_roi_x = 130
     game_roi_y = frame_base.shape[0] - 30
     game_roi_h = 100
     game_roi_w = 100

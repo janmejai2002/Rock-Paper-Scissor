@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
-from .myconstants import rock_path, paper_path, scissor_path
+import cv2
+from .myconstants import rock_path, paper_path, scissor_path, none_path
 
 
 class ROI:
@@ -15,7 +16,9 @@ class ROI:
         self.steps = movement_steps
         self.size_steps = size_change_steps
         self.action_imgs = {'R': rock_path,
-                            'P': paper_path, 'S': scissor_path}
+                            'P': paper_path,
+                            'S': scissor_path,
+                            'None': none_path}
         self.isMovable = isMovable
 
     def display_val(self):
@@ -131,4 +134,4 @@ class ROI:
 
     def show_computer_action(self, action):
         img_to_show = self.action_imgs.get(action)
-        print(img_to_show)
+        return cv2.imread(img_to_show)
