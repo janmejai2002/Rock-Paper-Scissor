@@ -7,7 +7,7 @@ import numpy as np
 from utils.game_brain import GameBrain
 from utils.roi_class import ROI
 from utils.myconstants import videostream_const_dict
-from utils.frame_constants import *
+from utils.helper_functions import *
 from utils.videostream import *
 from collections import deque
 from tensorflow.keras.models import load_model
@@ -39,6 +39,8 @@ bgModel = None
 prevpred = None
 isBgCaptured = 0
 computer_move = 'None'
+set_prediction = 'None'
+final_winner = 'Press Z for results'
 
 # for prediction sensitivity
 pred_deque = deque(maxlen=args["buffer"])
@@ -56,13 +58,13 @@ comp_coords = computer_roi.create_roi_zone()
 game_brain = GameBrain()
 
 while True:
+    moves = f"P : {set_prediction} | C : {computer_move}"
     frame = vs.read()
-    img_to_show = computer_roi.show_computer_action(computer_move)
+    # img_to_show = computer_roi.show_computer_action(computer_move)
     frame[comp_coords[0]:comp_coords[1], comp_coords[2]:comp_coords[3]
           ] = computer_roi.show_computer_action(computer_move)
-
     thresh = videostream_initialize(player_roi, frame, isBgCaptured, bgModel,
-                                    videostream_const_dict['learningRate'])
+                                    videostream_const_dict['learningRate'], game_brain.getCurrentScore(), moves, final_winner)
 
     if isBgCaptured == 1:
         prediction, score = predict_rgb_image_mobilenet(thresh, model)
@@ -71,6 +73,14 @@ while True:
         if pred_deque != prev_pred and (pred_deque.count(pred_deque[0]) == len(pred_deque)) and len(pred_deque) == args["buffer"]:
             prev_pred = pred_deque.copy()
             print(f"Prediction : {prediction}")
+
+            # Align the '|' in moves with upper
+            # The closest I could do it.
+            if prediction != 'None':
+                set_prediction = f"   {prediction} "
+            else:
+                set_prediction = prediction
+            # get computer move after player move has been predicted.
             computer_move = game_brain.getWinner(prediction)
             score_dict = game_brain.getCurrentScore()
             print(f"Current Score : {score_dict}")
@@ -86,5 +96,9 @@ while True:
         isBgCaptured = 1
         print('[INFO] Background Captured. Model with start making predictions')
     if key == ord('x'):
+        game_brain.resetResult()
         game_brain.resetScore()
+
+    if key == ord('z') or key == ord('Z'):
+        final_winner = game_brain.getFinalResult()
     player_roi.action_control(key)
