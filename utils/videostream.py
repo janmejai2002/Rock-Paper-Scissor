@@ -1,6 +1,7 @@
 from .roi_class import ROI
 import numpy as np
 import cv2
+import utils.myconstants as myconstants
 
 
 def remove_background(frame, bgModel, learningRate):
@@ -23,7 +24,7 @@ def remove_background(frame, bgModel, learningRate):
     return res
 
 
-def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRate):
+def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRate, score, moves, final_winner):
     """Starts webcam
 
     Args:
@@ -40,12 +41,30 @@ def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRat
     # create vertices in form of tuples for cv2.rectangle
     A, C = player_roi.create_box()
     # display initial values of ROI box
-    values = player_roi.display_val()
+    # values = player_roi.display_val()
     # draw the rectangle on screen
-    cv2.rectangle(frame, A, C, (0, 255, 0), 2)
+    cv2.rectangle(frame, A, C, myconstants.player_box_color, 2)
+    cv2.putText(frame, score, (frame.shape[1]//4-30, 40), cv2.FONT_HERSHEY_DUPLEX,
+                1, myconstants.score_color, thickness=1)
+
+    cv2.putText(frame, moves, (frame.shape[1]//4+37, 70), cv2.FONT_HERSHEY_SIMPLEX,
+                0.7, myconstants.move_color, thickness=2)
+
+    if final_winner == 'Press Z for results':
+        cv2.putText(frame, final_winner, (frame.shape[1]//4+50, 100), cv2.FONT_HERSHEY_DUPLEX,
+                    0.6, myconstants.press_z_color, thickness=1)
+    else:
+        cv2.putText(frame, final_winner, (frame.shape[1]//4+30, 160), cv2.FONT_HERSHEY_SIMPLEX,
+                    2.0, myconstants.final_winner_color, thickness=2)
+
+    cv2.rectangle(
+        frame, (frame.shape[1]-120, frame.shape[0]-15), (frame.shape[1]-12, frame.shape[0]-35), myconstants.reset_bg_color, -1)
+
+    cv2.putText(frame, 'X --> Reset',
+                (frame.shape[1]-120, frame.shape[0]-20), cv2.FONT_HERSHEY_PLAIN, 1, myconstants.x_reset_color, thickness=1)
     # draw the coordinates on screen
-    cv2.putText(frame, values, (50, 30),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (10, 240, 50))
+    # cv2.putText(frame, values, (50, 30),
+    #             cv2.FONT_HERSHEY_SIMPLEX, 1, (10, 240, 50))
     # display the frame
     cv2.imshow('Camera', frame)
     # check if movement of ROI is out of bounds. If yes, bring it back to previous state.

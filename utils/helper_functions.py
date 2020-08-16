@@ -13,7 +13,7 @@ def get_player_roi(frame_base):
 
 
 def get_computer_roi(frame_base):
-    game_roi_x = 130
+    game_roi_x = frame_base.shape[1] - 30
     game_roi_y = frame_base.shape[0] - 30
     game_roi_h = 100
     game_roi_w = 100
@@ -57,7 +57,7 @@ def get_arguments():
     ap.add_argument("-m", "--model", type=str, default="mobilenetv2_ver_1.0.h5", help="Name of model in str to be used. Model should be placed inside \
         models dir. Default : \"model1\"")
 
-    ap.add_argument("-b", "--buffer", type=int, default=2,
+    ap.add_argument("-b", "--buffer", type=int, default=4,
                     help="Buffer size for deque. Use to change sensitivity. Default:2")
 
     args = vars(ap.parse_args())
