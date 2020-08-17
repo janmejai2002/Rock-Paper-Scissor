@@ -48,6 +48,14 @@ def predict_rgb_image_mobilenet(thresh, model):
         return 'None', 0.0
 
 
+def stack_to_three_and_reverse(thresh):
+    image = np.stack((thresh,) * 3, axis=-1)
+    image = cv2.resize(image, (128, 128))
+    image = np.array(image, dtype='float32')
+    image = cv2.flip(image, 1)
+    return image
+
+
 def get_arguments():
     ap = argparse.ArgumentParser()
 

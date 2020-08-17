@@ -55,7 +55,7 @@ def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRat
                     0.6, myconstants.press_z_color, thickness=1)
     else:
         cv2.putText(frame, final_winner, (frame.shape[1]//4+30, 160), cv2.FONT_HERSHEY_SIMPLEX,
-                    2.0, myconstants.final_winner_color, thickness=2)
+                    1.7, myconstants.final_winner_color, thickness=2)
 
     cv2.rectangle(
         frame, (frame.shape[1]-120, frame.shape[0]-15), (frame.shape[1]-12, frame.shape[0]-35), myconstants.reset_bg_color, -1)
@@ -85,7 +85,7 @@ def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRat
 
         ret, thresh = cv2.threshold(
             blur, 60, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-        cv2.imshow('mask', thresh)
+        # cv2.imshow('mask', thresh)
 
         return thresh
 

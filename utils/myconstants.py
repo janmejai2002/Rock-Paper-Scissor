@@ -27,7 +27,7 @@ gesture_names = {0: 'None',
 
 
 player_box_color = (255, 0, 98)
-score_color = (159, 184, 0)
+score_color = (128, 126, 31)
 move_color = (201, 0, 151)
 press_z_color = (83, 36, 240)
 final_winner_color = (0, 255, 0)
