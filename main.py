@@ -95,10 +95,13 @@ while True:
         time.sleep(1)
         isBgCaptured = 1
         print('[INFO] Background Captured. Model with start making predictions')
+
     if key == ord('x'):
-        game_brain.resetResult()
+        final_winner = game_brain.resetResult()
         game_brain.resetScore()
+        print(final_winner)
 
     if key == ord('z') or key == ord('Z'):
         final_winner = game_brain.getFinalResult()
+
     player_roi.action_control(key)

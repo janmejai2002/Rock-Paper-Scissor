@@ -60,3 +60,4 @@ class GameBrain:
 
     def resetResult(self):
         self.result = 'Press Z for results'
+        return self.result
