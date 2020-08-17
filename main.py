@@ -18,7 +18,7 @@ args = get_arguments()
 model_used = os.path.join('models', args["model"])
 print("[INFO] loading model ...")
 model = load_model(model_used)
-print("[INFO] model loaded succesfully !")
+print("[INFO] Model loaded succesfully !")
 # Start Webcam
 print("[INFO] Initializing webcam...")
 vs = VideoStream(src=args["webcam"]).start()
@@ -27,7 +27,7 @@ time.sleep(1)
 # The frame is a numpy array.
 frame_base = vs.read()
 
-print(f"Frame dims are :{frame_base.shape[1]}x{frame_base.shape[0]}")
+print(f"[INFO] Frame dims are : {frame_base.shape[1]}x{frame_base.shape[0]}")
 
 # values for ROI object
 
@@ -41,6 +41,7 @@ isBgCaptured = 0
 computer_move = 'None'
 set_prediction = 'None'
 final_winner = 'Press Z for results'
+thresh = None
 
 # for prediction sensitivity
 pred_deque = deque(maxlen=args["buffer"])
@@ -61,10 +62,20 @@ while True:
     moves = f"P : {set_prediction} | C : {computer_move}"
     frame = vs.read()
     # img_to_show = computer_roi.show_computer_action(computer_move)
+    if isinstance(thresh, np.ndarray):
+        thresh = stack_to_three_and_reverse(thresh)
+        frame[0:128, frame_base.shape[1]-128:frame_base.shape[1]] = thresh
+    else:
+        frame[0:128, frame_base.shape[1]-128:frame_base.shape[1]] = cv2.flip(cv2.imread(
+            os.path.join('imgs', 'Before_BG_sub.png')), 1)
+
     frame[comp_coords[0]:comp_coords[1], comp_coords[2]:comp_coords[3]
           ] = computer_roi.show_computer_action(computer_move)
     thresh = videostream_initialize(player_roi, frame, isBgCaptured, bgModel,
                                     videostream_const_dict['learningRate'], game_brain.getCurrentScore(), moves, final_winner)
+    # if isinstance(thresh, np.ndarray):
+    #     thresh_show = cv2.flip(cv2.resize(
+    #         thresh, (128, 128)), 1)
 
     if isBgCaptured == 1:
         prediction, score = predict_rgb_image_mobilenet(thresh, model)
@@ -72,18 +83,18 @@ while True:
 
         if pred_deque != prev_pred and (pred_deque.count(pred_deque[0]) == len(pred_deque)) and len(pred_deque) == args["buffer"]:
             prev_pred = pred_deque.copy()
-            print(f"Prediction : {prediction}")
+            # print(f"Prediction : {prediction}")
 
             # Align the '|' in moves with upper
             # The closest I could do it.
             if prediction != 'None':
-                set_prediction = f"   {prediction} "
+                set_prediction = f"  {prediction}  "
             else:
                 set_prediction = prediction
             # get computer move after player move has been predicted.
             computer_move = game_brain.getWinner(prediction)
             score_dict = game_brain.getCurrentScore()
-            print(f"Current Score : {score_dict}")
+            # print(f"Current Score : {score_dict}")
 
     key = cv2.waitKey(10) & 0xFF
 
