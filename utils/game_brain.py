@@ -31,12 +31,13 @@ class GameBrain:
                     moves_dict.get(move_check[::-1]))]] += 1
 
             else:
-                print("Tie")
+                # print('Tie')
+                pass
 
             return self.__computerAction
 
         else:
-            print("Waiting for player move")
+            # print("Waiting for player move")
             return 'None'
 
     def getFinalResult(self):

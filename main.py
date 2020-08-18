@@ -16,13 +16,13 @@ from tensorflow.keras.models import load_model
 args = get_arguments()
 # Load model
 model_used = os.path.join('models', args["model"])
-print("[INFO] loading model ...")
+print("[INFO] Loading model ...")
 model = load_model(model_used)
-print("[INFO] Model loaded succesfully !")
+print("[INFO] Model loaded succesfully !!!")
 # Start Webcam
 print("[INFO] Initializing webcam...")
 vs = VideoStream(src=args["webcam"]).start()
-time.sleep(1)
+time.sleep(0.5)
 # Frame dimensions are captured to set limits for ROI box.
 # The frame is a numpy array.
 frame_base = vs.read()
@@ -105,7 +105,7 @@ while True:
             0, videostream_const_dict['bgSubThreshold'])
         time.sleep(1)
         isBgCaptured = 1
-        print('[INFO] Background Captured. Model with start making predictions')
+        print('[INFO] Background Capture Successful ...')
 
     if key == ord('x'):
         final_winner = game_brain.resetResult()
