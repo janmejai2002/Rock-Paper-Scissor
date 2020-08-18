@@ -8,7 +8,7 @@ Enjoy a more realistic game of rock paper scissors against your computer than ju
 
     pip install -r requirements.txt
 
-or based on your settingS you mgiht have to doo
+or based on your settings you mgiht have to doo
 
     pip3 install -r requirements.txt
 
