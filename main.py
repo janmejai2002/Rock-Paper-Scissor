@@ -110,7 +110,7 @@ while True:
     if key == ord('x'):
         final_winner = game_brain.resetResult()
         game_brain.resetScore()
-        print(final_winner)
+        # print(final_winner)
 
     if key == ord('z') or key == ord('Z'):
         final_winner = game_brain.getFinalResult()

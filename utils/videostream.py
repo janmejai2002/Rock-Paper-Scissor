@@ -32,10 +32,13 @@ def videostream_initialize(player_roi, frame, isBgCaptured, bgModel, learningRat
         frame (np array): captured frame from webcam
         isBgCaptured (bool): To use background capture on every frame
         bgModel (backgroundSubtraction model): Background Subtraction Model OpenCV
-        learningRate (float): Learniong rate of BgSubtraction Model, Use 0
+        learningRate (float): Learning rate of BgSubtraction Model, Use 0
+        score (str): Current Score
+        moves (str): Current moves of computer and player
+        final_winner (str): Final Winner of game
 
     Returns:
-        np array: different types of frame based on command line argument.
+        np array : If Background Subtraction takes place
     """
     frame = cv2.flip(frame, 1)
     # create vertices in form of tuples for cv2.rectangle
