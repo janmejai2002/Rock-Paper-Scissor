@@ -18,6 +18,8 @@ I suggest making a new environment because a new Tensorflow version has been rel
 
 ## Play
 
+![](https://github.com/janmejai2002/Rock-Paper-Scissor/blob/master/RPS.gif)
+
 You might have to use `python3` for the commands ahead.
 
 Open terminal in project directory. Then do :
