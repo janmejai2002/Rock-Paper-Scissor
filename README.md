@@ -18,7 +18,7 @@ I suggest making a new environment because a new Tensorflow version has been rel
 
 ## Play
 
-![](https://github.com/janmejai2002/Rock-Paper-Scissor/blob/master/RPS.gif)
+To see a small video tutorial check [this](https://github.com/janmejai2002/Rock-Paper-Scissor/blob/master/RPS.gif) gif I made :D
 
 You might have to use `python3` for the commands ahead.
 
